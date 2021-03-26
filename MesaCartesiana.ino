@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "StepperDriver.h"
 /*============================================================
- * ALEXANDRE MARQUES BALDEZ JUNIOR
+ * ALEXANDRE MARQUES BALDEZ JUNIOR 1
 *                          DEFINES
 * - A configuração dos pinos do arduino esta
 * fundamentada no comando:#define nome_do_pino numero_do_pino
