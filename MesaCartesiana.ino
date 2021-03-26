@@ -1,20 +1,7 @@
 #include "Arduino.h"
 #include "StepperDriver.h"
-/*============================================================
- * ALEXANDRE MARQUES BALDEZ JUNIOR 1
-*                          DEFINES
-* - A configuração dos pinos do arduino esta
-* fundamentada no comando:#define nome_do_pino numero_do_pino
-*
-* - Os valores iniciais de alguns parametros também são
-* configurados pelos defines como:
-* modo do passo, estado inicial da chave fim de curso,
-* limite maximo da coordenada do eixo,
-* milimetros por volta do eixo,
-* periodo maximo e minimo e declividade da curva sigmoidal
-==============================================================*/
-//EIXO X
-#define MODO_PASSO_X 1  //1 para 1/1, 2 para 1/2, 4 para 1/4, 8 para 1/8, 16 para 1/16
+
+#define MODO_PASSO_X 1
 #define PINO_ENABLE_X 3
 #define PINO_RESET_X 4
 #define PINO_SLEEP_X 5
@@ -34,8 +21,7 @@
 #define SIG_PERIODO_MINIMO_X 100
 #define SIG_DECLIVIDADE_X 0.1
 
-//EIXO Y
-#define MODO_PASSO_Y 1  //1 para 1/1, 2 para 1/2, 4 para 1/4, 8 para 1/8, 16 para 1/16
+#define MODO_PASSO_Y 1
 #define PINO_ENABLE_Y 15
 #define PINO_RESET_Y 16
 #define PINO_SLEEP_Y 17
@@ -54,51 +40,9 @@
 #define SIG_PERIODO_MAXIMO_Y 600
 #define SIG_PERIODO_MINIMO_Y 100
 #define SIG_DECLIVIDADE_Y 0.1
-/*==========================================
-*            VARIAVEIS GLOBAIS
-===========================================*/
+
 String leitura;
 byte x = 0, y = 0;
-
-/*
- SENTIDO HORARIO ->
-byte WAVESTEP [4] = {9, 3, 6, 12};
-byte FULLSTEP [4] = {1, 2, 4,  8};
-byte HALFSTEP [8] = {9, 1, 3, 2, 6, 4, 12, 8};
-
-P|I4|I3|I2|I1|
-P|BN|BP|AN|AP|
---------------
-0| 1| 0| 0| 1|9
-1| 0| 0| 0| 1|1
-2| 0| 0| 1| 1|3
-3| 0| 0| 1| 0|2
-4| 0| 1| 1| 0|6
-5| 0| 1| 0| 0|4
-6| 1| 1| 0| 0|12
-7| 1| 0| 0| 0|8
-
-indices  impares WAVESTEP
-indices    pares FULLSTEP
-todos os indices HALFSTEP
-
-0x00 0000  0
-0x01 0001  1
-0x02 0010  2
-0x03 0011  3
-0x04 0100  4
-0x05 0101  5
-0x06 0110  6
-0x07 0111  7
-0x08 1000  8
-0x09 1001  9
-0x0A 1010 10
-0x0B 1011 11
-0x0C 1100 12
-0x0D 1101 13
-0x0E 1110 14
-0x0F 1111 15
-*/
 
 byte vetorPassos     [8] = {    9,    1,    3,    2,    6,    4,   12,    8};
 byte vetorPassosHexa [8] = { 0x09, 0x01, 0x03, 0x02, 0x06, 0x04, 0x0C, 0x08};
@@ -118,10 +62,6 @@ Sigmoidal *sigmoidalY;
 Driver *driverY;
 Eixo *eixoY;
 
-
-/*==========================================
-*                 MÉTODOS
-===========================================*/
 void interpretador(String comando);
 void movimentarMesa(String coordenada);
 void escolherModoPasso(Eixo *e, String modoPasso);
@@ -210,22 +150,9 @@ void setup(){
 	delay(3000);
 }
 
-/*
-  O método loop está vazio mas na verdade ele contém em suas entranhas uma
-  chamada do método SerialEvent, sendo assim uma boa aplicação do loop é
-  quando necessitamos executar uma ação que não depende da porta Serial como
-  enviar dados de um sensor.
-*/
-
 void loop(){
 
 }
-
-/*
-  O método SerialEvent fica ouvindo a porta Serial cada vez que
-  é enviado um comando para o arduino o SerialEvent o envia para
-  o interpretador que toma a decisão do que fazer
-*/
 
 void serialEvent(){
   if(Serial.available() > 0){
@@ -237,14 +164,6 @@ void serialEvent(){
   }
 }
 
-/*
-  Para mover a mesa se usa o comando : MOVER x,y ex: MOVER 1,1
-  Para ligar o Led 13 do arduino se usa o comando: L
-  Para desligar o Led 13 do arduino se usa o comando: D
-  Para mudar o passo do motor X se usa o comando: MODOPASSOX numero ex:MODOPASSOX 16
-  Para mudar o passo do motor Y se usa o comando: MODOPASSOY numero ex:MODOPASSOY  8
-*/
-
 void interpretador(String comando){
   comando.toUpperCase();
   if (comando.indexOf("MOVER") > -1) movimentarMesa(comando.substring(comando.indexOf(" ")+1));
@@ -253,13 +172,6 @@ void interpretador(String comando){
   if (comando.indexOf("MODOPASSOX") > -1) escolherModoPasso(eixoX, comando.substring(comando.indexOf(" ")+1));
   if (comando.indexOf("MODOPASSOY") > -1) escolherModoPasso(eixoY, comando.substring(comando.indexOf(" ")+1));
 }
-
-/*
-  O método movimentar mesa recebe um literal com o comando MOVER 1,1
-  separa as coordenada e as envia para os objetos da classe Eixo eixoX e eixoY
-  lembrando que para a execução x,y devem diferentes de sua posição anterior
-  e estarem dentro do limite Maximo de coordenadas
-*/
 
 void movimentarMesa(String coordenada){
   if(!(coordenada.indexOf(",") == -1)){
@@ -271,22 +183,6 @@ void movimentarMesa(String coordenada){
     }
   }
 }
-
-/*
-MP|M0|M1|M2|R
---------------
- 1| 0| 0| 0| 0 full step
- 2| 1| 0| 0| 4 half step
- 4| 0| 1| 0| 2 1/4  step
- 8| 1| 1| 0| 6 1/8  step
-16| 0| 0| 1| 1 1/16 step
-32| 1| 0| 1| 5 1/32 step
-32| 0| 1| 1| 3 1/32 step
-32| 1| 1| 1| 7 1/32 step
-
-e.getDriver().setarModoPasso(MP,R);
-0x00 0x01 0x02 0x03 0x04 0x05 0x06 0x07
-*/
 
 void escolherModoPasso(Eixo *e, String modoPasso){
   switch(modoPasso.toInt()){
