@@ -13,7 +13,7 @@ class Pino {
 		} TipoPino;
 
 		~Pino(void){}
-		Pino(TipoPino t, byte n, byte m, int e){
+		Pino(TipoPino t, byte n, byte m, unsigned int e){
 			this->setTipo(t);
 			this->setNumero(n);
 			this->setModo(m);
@@ -42,7 +42,7 @@ class Pino {
 			return this->modo;
 		}
 
-		int getEstado(void){
+		unsigned int getEstado(void){
 			this->estado = this->tipo == TipoPino::DIGITAL? digitalRead(this->numero): analogRead(this->numero);
 			return this->estado;
 		}

@@ -8,8 +8,8 @@
 #define PINO_M0_X 60
 #define PINO_M1_X 70
 #define PINO_M2_X 80
-#define PINO_PASSO_X 320
-#define PINO_DIRECAO_X 420
+#define PINO_PASSO_X 200
+#define PINO_DIRECAO_X 200
 #define PINO_IN1_X 0
 #define PINO_IN2_X 0
 #define PINO_IN3_X 0
@@ -121,8 +121,8 @@ void inicializarEixos(Driver::TipoAcionamento tp){
 	sigmoidalY   = new Sigmoidal(SIG_PERIODO_MAXIMO_Y, SIG_PERIODO_MINIMO_Y, SIG_DECLIVIDADE_Y);
 
 	if(tp == Driver::HARDWARE){
-		pinoPassoX   = new Pino(Pino::DIGITAL,PINO_PASSO_X, OUTPUT, LOW);
-		pinoDirecaoX = new Pino(Pino::DIGITAL,PINO_DIRECAO_X, OUTPUT, LOW);
+		pinoPassoX   = new Pino(Pino::DIGITAL, PINO_PASSO_X, OUTPUT, LOW);
+		pinoDirecaoX = new Pino(Pino::DIGITAL, PINO_DIRECAO_X, OUTPUT, LOW);
 		pinoPassoY   = new Pino(Pino::DIGITAL,PINO_PASSO_Y, OUTPUT, LOW);
 		pinoDirecaoY = new Pino(Pino::DIGITAL,PINO_DIRECAO_Y, OUTPUT, LOW);
 
@@ -206,8 +206,8 @@ void inicializarEixos(Driver::TipoAcionamento tp){
 		sigmoidalY
 	);
 
-	eixoX->rotacionarPara(0);
-	eixoY->rotacionarPara(0);
+	eixoX->calibrar();
+	eixoY->calibrar();
 }
 
 void interpretarComandos(String comando){

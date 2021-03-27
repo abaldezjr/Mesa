@@ -9,14 +9,11 @@
 class Eixo {
 
 	public:
-    	~Eixo(void){}
-    	Eixo(Driver *driver, Pino *pinoCursoMaximo, Pino *pinoCursoMinimo, Sigmoidal *sigmoidal){
+		~Eixo(void){}
+		Eixo(Driver *driver, Pino *pinoCursoMaximo, Pino *pinoCursoMinimo, Sigmoidal *sigmoidal){
 			this->driver = driver;
-			this->micrometrosPorVolta = 8000;
-			this->estadoFimDeCurso = LOW;
 			this->pinoCursoMaximo = pinoCursoMaximo;
 			this->pinoCursoMinimo = pinoCursoMinimo;
-			this->posicao = 0;
 			this->sigmoidal = sigmoidal;
 		}
 
@@ -26,7 +23,6 @@ class Eixo {
 			this->estadoFimDeCurso = estadoFimDeCurso;
 			this->pinoCursoMaximo = pinoCursoMaximo;
 			this->pinoCursoMinimo = pinoCursoMinimo;
-			this->posicao = 0;
 			this->sigmoidal = sigmoidal;
 		}
 
@@ -65,14 +61,23 @@ class Eixo {
 			);
 		}
 
+		void calibrar(){
+			this->driver->setDirecao(Driver::ANTIHORARIO);
+			this->posicao = 0;
+			while(this->pinoCursoMinimo->getEstado()){
+				this->driver->passo();
+				delayMicroseconds(this->sigmoidal->getPeriodoMaximo());
+			}
+		}
+
 	private:
 		Driver *driver;
 		Pino *pinoCursoMaximo, *pinoCursoMinimo;
 		Sigmoidal *sigmoidal;
 
 		int posicao = 0;
-		int micrometrosPorVolta;
-		bool estadoFimDeCurso;
+		int micrometrosPorVolta = 8000;
+		bool estadoFimDeCurso = LOW;
 
 		bool podeMovimentar(void) const {
 			if(this->pinoCursoMinimo->getEstado() == 0 || this->pinoCursoMaximo->getEstado() == 0){
@@ -90,10 +95,15 @@ class Eixo {
 		void rotacionarPasso(Driver::Direcao direcao,int passos){
 			this->driver->setDirecao(direcao);
 			for(int i = 0, iSig = 0; i < passos; i++, i <= ((passos * this->driver->getModoPasso()) / 2)? iSig++: iSig--){
-				if(this->podeMovimentar())
+				if(this->podeMovimentar()){
+					this->driver->passo();
+					delayMicroseconds(this->sigmoidal->calculoDoInstante(iSig));
 					this->posicao += direcao * (this->micrometrosPorVolta / this->driver->getPassosPorVolta());
-				this->driver->passo();
-				delayMicroseconds(this->sigmoidal->calculoDoInstante(iSig));
+				}else{
+					i = passos;
+					delay(3000);
+					this->calibrar();
+				}
 			}
 		}
 };
