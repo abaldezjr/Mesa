@@ -8,6 +8,8 @@
 #define PINO_M0_X 6
 #define PINO_M1_X 7
 #define PINO_M2_X 8
+#define PINO_PASSO_X 32
+#define PINO_DIRECAO_X 42
 #define PINO_IN1_X 9
 #define PINO_IN2_X 10
 #define PINO_IN3_X 11
@@ -28,6 +30,8 @@
 #define PINO_M0_Y 18
 #define PINO_M1_Y 19
 #define PINO_M2_Y 20
+#define PINO_PASSO_Y 34
+#define PINO_DIRECAO_Y 44
 #define PINO_IN1_Y 21
 #define PINO_IN2_Y 22
 #define PINO_IN3_Y 23
@@ -49,6 +53,7 @@ byte vetorPassosHexa [8] = { 0x09, 0x01, 0x03, 0x02, 0x06, 0x04, 0x0C, 0x08};
 byte vetorPassosByte [8] = {B1001,B0001,B0011,B0010,B0110,B0100,B1100,B1000};
 
 Pino *pino13;
+Pino *pinoPassoX, *pinoDirecaoX;
 
 Pino *pinoEnableX, *pinoResetX, *pinoSleepX, *pinoM0X, *pinoM1X, *pinoM2X, *pinoIN1X, *pinoIN2X, *pinoIN3X, *pinoIN4X;
 Pino *cursoMaximoX, *cursoMinimoX;
@@ -56,31 +61,47 @@ Sigmoidal *sigmoidalX;
 Driver *driverX;
 Eixo *eixoX;
 
+Pino *pinoPassoY, *pinoDirecaoY;
+
 Pino *pinoEnableY, *pinoResetY, *pinoSleepY, *pinoM0Y, *pinoM1Y, *pinoM2Y, *pinoIN1Y, *pinoIN2Y, *pinoIN3Y, *pinoIN4Y;
 Pino *cursoMaximoY, *cursoMinimoY;
 Sigmoidal *sigmoidalY;
 Driver *driverY;
 Eixo *eixoY;
 
+void inicializador(Driver::TipoAcionamento tp);
 void interpretador(String comando);
 void movimentarMesa(String coordenada);
 void escolherModoPasso(Eixo *e, String modoPasso);
 
 void setup(){
 	Serial.begin(9600);
-
 	pino13 = new Pino(Pino::DIGITAL, 13, OUTPUT, LOW);
+	inicializador(Driver::SOFTWARE);
+	delay(3000);
+}
 
+void loop(){
+
+}
+
+void serialEvent(){
+  if(Serial.available() > 0){
+    leitura = Serial.readStringUntil('\n');
+    if(!leitura.equals("")){
+      interpretador(leitura);
+      leitura = "";
+    }
+  }
+}
+
+void inicializador(Driver::TipoAcionamento tp){
 	pinoEnableX  = new Pino(Pino::DIGITAL, PINO_ENABLE_X, OUTPUT, LOW);
 	pinoResetX   = new Pino(Pino::DIGITAL, PINO_RESET_X, OUTPUT, LOW);
 	pinoSleepX   = new Pino(Pino::DIGITAL, PINO_SLEEP_X, OUTPUT, LOW);
 	pinoM0X      = new Pino(Pino::DIGITAL, PINO_M0_X, OUTPUT, LOW);
 	pinoM1X      = new Pino(Pino::DIGITAL, PINO_M1_X, OUTPUT, LOW);
 	pinoM2X      = new Pino(Pino::DIGITAL, PINO_M2_X, OUTPUT, LOW);
-	pinoIN1X     = new Pino(Pino::DIGITAL, PINO_IN1_X, OUTPUT, LOW);
-	pinoIN2X     = new Pino(Pino::DIGITAL, PINO_IN2_X, OUTPUT, LOW);
-	pinoIN3X     = new Pino(Pino::DIGITAL, PINO_IN3_X, OUTPUT, LOW);
-	pinoIN4X     = new Pino(Pino::DIGITAL, PINO_IN4_X, OUTPUT, LOW);
 	cursoMaximoX = new Pino(Pino::DIGITAL, PINO_CURSOMAXIMO_X, INPUT, HIGH);
 	cursoMinimoX = new Pino(Pino::DIGITAL, PINO_CURSOMINIMO_X, INPUT, HIGH);
 	sigmoidalX   = new Sigmoidal(SIG_PERIODO_MAXIMO_X, SIG_PERIODO_MINIMO_X, SIG_DECLIVIDADE_X);
@@ -91,43 +112,77 @@ void setup(){
 	pinoM0Y      = new Pino(Pino::DIGITAL, PINO_M0_Y, OUTPUT, LOW);
 	pinoM1Y      = new Pino(Pino::DIGITAL, PINO_M1_Y, OUTPUT, LOW);
 	pinoM2Y      = new Pino(Pino::DIGITAL, PINO_M2_Y, OUTPUT, LOW);
-	pinoIN1Y     = new Pino(Pino::DIGITAL, PINO_IN1_Y, OUTPUT, LOW);
-	pinoIN2Y     = new Pino(Pino::DIGITAL, PINO_IN2_Y, OUTPUT, LOW);
-	pinoIN3Y     = new Pino(Pino::DIGITAL, PINO_IN3_Y, OUTPUT, LOW);
-	pinoIN4Y     = new Pino(Pino::DIGITAL, PINO_IN4_Y, OUTPUT, LOW);
 	cursoMaximoY = new Pino(Pino::DIGITAL, PINO_CURSOMAXIMO_Y, INPUT, HIGH);
 	cursoMinimoY = new Pino(Pino::DIGITAL, PINO_CURSOMINIMO_Y, INPUT, HIGH);
 	sigmoidalY   = new Sigmoidal(SIG_PERIODO_MAXIMO_Y, SIG_PERIODO_MINIMO_Y, SIG_DECLIVIDADE_Y);
 
-	driverX = new Driver(
-		Driver::WAVESTEP,
-		pinoEnableX,
-		pinoResetX,
-		pinoSleepX,
-		pinoM0X,
-		pinoM1X,
-		pinoM2X,
-		pinoIN1X,
-		pinoIN2X,
-		pinoIN3X,
-		pinoIN4X,
-		vetorPassos
-	);
+	if(tp == Driver::HARDWARE){
+		pinoPassoX   = new Pino(Pino::DIGITAL,PINO_PASSO_X, OUTPUT, LOW);
+		pinoDirecaoX = new Pino(Pino::DIGITAL,PINO_DIRECAO_X, OUTPUT, LOW);
+		pinoPassoY   = new Pino(Pino::DIGITAL,PINO_PASSO_Y, OUTPUT, LOW);
+		pinoDirecaoY = new Pino(Pino::DIGITAL,PINO_DIRECAO_Y, OUTPUT, LOW);
 
-	driverY = new Driver(
-		Driver::WAVESTEP,
-		pinoEnableY,
-		pinoResetY,
-		pinoSleepY,
-		pinoM0Y,
-		pinoM1Y,
-		pinoM2Y,
-		pinoIN1Y,
-		pinoIN2Y,
-		pinoIN3Y,
-		pinoIN4Y,
-		vetorPassos
-	);
+		driverX = new Driver(
+			pinoEnableX,
+			pinoResetX,
+			pinoSleepX,
+			pinoM0X,
+			pinoM1X,
+			pinoM2X,
+			pinoPassoX,
+			pinoDirecaoX
+		);
+
+		driverY = new Driver(
+			pinoEnableY,
+			pinoResetY,
+			pinoSleepY,
+			pinoM0Y,
+			pinoM1Y,
+			pinoM2Y,
+			pinoPassoY,
+			pinoDirecaoY
+		);
+	}else{
+		pinoIN1X = new Pino(Pino::DIGITAL, PINO_IN1_X, OUTPUT, LOW);
+		pinoIN2X = new Pino(Pino::DIGITAL, PINO_IN2_X, OUTPUT, LOW);
+		pinoIN3X = new Pino(Pino::DIGITAL, PINO_IN3_X, OUTPUT, LOW);
+		pinoIN4X = new Pino(Pino::DIGITAL, PINO_IN4_X, OUTPUT, LOW);
+		pinoIN1Y = new Pino(Pino::DIGITAL, PINO_IN1_Y, OUTPUT, LOW);
+		pinoIN2Y = new Pino(Pino::DIGITAL, PINO_IN2_Y, OUTPUT, LOW);
+		pinoIN3Y = new Pino(Pino::DIGITAL, PINO_IN3_Y, OUTPUT, LOW);
+		pinoIN4Y = new Pino(Pino::DIGITAL, PINO_IN4_Y, OUTPUT, LOW);
+
+		driverX = new Driver(
+			Driver::WAVESTEP,
+			pinoEnableX,
+			pinoResetX,
+			pinoSleepX,
+			pinoM0X,
+			pinoM1X,
+			pinoM2X,
+			pinoIN1X,
+			pinoIN2X,
+			pinoIN3X,
+			pinoIN4X,
+			vetorPassos
+		);
+
+		driverY = new Driver(
+			Driver::WAVESTEP,
+			pinoEnableY,
+			pinoResetY,
+			pinoSleepY,
+			pinoM0Y,
+			pinoM1Y,
+			pinoM2Y,
+			pinoIN1Y,
+			pinoIN2Y,
+			pinoIN3Y,
+			pinoIN4Y,
+			vetorPassos
+		);
+	}
 
 	eixoX = new Eixo(
 		driverX,
@@ -146,22 +201,6 @@ void setup(){
 		cursoMinimoY,
 		sigmoidalY
 	);
-
-	delay(3000);
-}
-
-void loop(){
-
-}
-
-void serialEvent(){
-  if(Serial.available() > 0){
-    leitura = Serial.readStringUntil('\n');
-    if(!leitura.equals("")){
-      interpretador(leitura);
-      leitura = "";
-    }
-  }
 }
 
 void interpretador(String comando){
