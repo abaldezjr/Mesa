@@ -80,10 +80,6 @@ class Eixo {
 		bool estadoFimDeCurso = LOW;
 
 		bool podeMovimentar(void) const {
-			if(this->pinoCursoMinimo->getEstado() == 0 || this->pinoCursoMaximo->getEstado() == 0){
-				Serial.print("MAX:"+(String) this->pinoCursoMaximo->getEstado());
-				Serial.println(" MIN:"+(String) this->pinoCursoMinimo->getEstado());
-			}
 			return
 			( this->estadoFimDeCurso && ((this->driver->getDirecao() && !this->pinoCursoMaximo->getEstado()) ||
 										(!this->driver->getDirecao() && !this->pinoCursoMinimo->getEstado())))

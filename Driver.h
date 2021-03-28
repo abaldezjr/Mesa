@@ -7,21 +7,21 @@
 class Driver {
     
 	public:
-		typedef enum {
+		enum TipoAcionamento {
 			SOFTWARE  = 0,
 			HARDWARE  = 1
-		} TipoAcionamento;
+		};
 
-		typedef enum {
+		enum TipoPasso {
 			WAVESTEP    = 0,
 			FULLSTEP    = 1,
 			HALFSTEP    = 2
-		} TipoPasso;
+		};
 
-		typedef enum {
+		enum Direcao {
 			ANTIHORARIO = -1,
 			HORARIO     =  1
-		} Direcao;
+		};
 
 		~Driver(void){}
 		Driver(Pino* pinoIN1, Pino* pinoIN2, Pino* pinoIN3, Pino* pinoIN4, byte* vetorPassos){

@@ -2,15 +2,14 @@
 #define PINO_H_INCLUDED
 
 #include "Arduino.h"
-#include "Pino.h"
 
 class Pino {
 
 	public:
-		typedef enum {
+		enum TipoPino {
 			ANALOGICO  = 0,
 			DIGITAL    = 1,
-		} TipoPino;
+		};
 
 		~Pino(void){}
 		Pino(TipoPino t, byte n, byte m, unsigned int e){
@@ -45,13 +44,6 @@ class Pino {
 		unsigned int getEstado(void){
 			this->estado = this->tipo == TipoPino::DIGITAL? digitalRead(this->numero): analogRead(this->numero);
 			return this->estado;
-		}
-
-		String toString(void) const {
-			return "Tipo "+(String) this->tipo+" "+
-			"Numero "+(String) this->numero+" "+
-			"Modo "+(String) this->modo+" "+
-			"Estado "+(String) this->estado;
 		}
 
 	private:

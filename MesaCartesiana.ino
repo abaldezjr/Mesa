@@ -49,8 +49,8 @@ String leitura;
 int x = 0, y = 0;
 
 byte vetorPassos     [8] = {    9,    1,    3,    2,    6,    4,   12,    8};
-byte vetorPassosHexa [8] = { 0x09, 0x01, 0x03, 0x02, 0x06, 0x04, 0x0C, 0x08};
-byte vetorPassosByte [8] = {B1001,B0001,B0011,B0010,B0110,B0100,B1100,B1000};
+//byte vetorPassosHexa [8] = { 0x09, 0x01, 0x03, 0x02, 0x06, 0x04, 0x0C, 0x08};
+//byte vetorPassosByte [8] = {B1001,B0001,B0011,B0010,B0110,B0100,B1100,B1000};
 
 Pino *pino13;
 
