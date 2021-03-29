@@ -68,7 +68,11 @@ class Sigmoidal {
 		}
 
 	private:
-		double periodoMaximo, periodoMinimo, amplitude, declividade, xMedio = 0;
-		int vetorAceleracao;
+		double periodoMaximo    { 600 },
+			   periodoMinimo    { 100 },
+			   amplitude        { this->periodoMaximo - this->periodoMinimo  },
+			   declividade      { 0 },
+			   xMedio           { 0 };
+		int    vetorAceleracao  { 1 };
 };
 #endif

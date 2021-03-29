@@ -136,11 +136,13 @@ class Driver {
 		Pino *pinoPasso, *pinoDirecao;
 		Pino *pinoIN1, *pinoIN2, *pinoIN3, *pinoIN4;
 
-		TipoAcionamento tipoAcionamento = TipoAcionamento::SOFTWARE;
-		TipoPasso tipoPasso = TipoPasso::WAVESTEP;
-		Direcao direcao = Direcao::HORARIO;
-		int passoAtual = 0, modoPasso = 1, passosPorVolta = 200;
-		byte *vetorPassos;
+		TipoAcionamento tipoAcionamento { TipoAcionamento::SOFTWARE };
+		TipoPasso 		tipoPasso       { TipoPasso::WAVESTEP };
+		Direcao 		direcao         { Direcao::HORARIO };
+		int 			passoAtual 		{ 0 },
+						modoPasso 		{ 1 },
+						passosPorVolta 	{ 200 };
+		byte 		   *vetorPassos;
 
 		void setarEstados(byte b){
 			this->pinoIN1->setEstado((b >> 0) & 1);

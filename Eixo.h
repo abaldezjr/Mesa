@@ -71,13 +71,13 @@ class Eixo {
 		}
 
 	private:
-		Driver *driver;
-		Pino *pinoCursoMaximo, *pinoCursoMinimo;
-		Sigmoidal *sigmoidal;
+		Driver 		*driver;
+		Pino 		*pinoCursoMaximo, *pinoCursoMinimo;
+		Sigmoidal 	*sigmoidal;
 
-		int posicao = 0;
-		int micrometrosPorVolta = 8000;
-		bool estadoFimDeCurso = LOW;
+		int 		posicao 			{ 0 };
+		int 		micrometrosPorVolta { 8000 };
+		bool 		estadoFimDeCurso	{ LOW };
 
 		bool podeMovimentar(void) const {
 			return

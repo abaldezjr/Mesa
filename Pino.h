@@ -24,7 +24,7 @@ class Pino {
 			pinMode( this->numero, this->modo);
 		}
 
-		void setEstado(int e){
+		void setEstado(unsigned int e){
 			this->estado = e;
 			this->tipo == TipoPino::DIGITAL? digitalWrite(this->numero, this->estado): analogWrite(this->numero, this->estado);
 		}
@@ -47,10 +47,10 @@ class Pino {
 		}
 
 	private:
-		TipoPino tipo;
-		byte numero;
-		byte modo;
-		int estado;
+		TipoPino tipo        { TipoPino::DIGITAL };
+		byte numero          { 0 };
+		byte modo            { OUTPUT };
+		unsigned int estado  { LOW };
 
 		void setTipo(TipoPino t){
 			this->tipo = t;

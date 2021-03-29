@@ -52,26 +52,25 @@ byte vetorPassos     [8] = {    9,    1,    3,    2,    6,    4,   12,    8};
 //byte vetorPassosHexa [8] = { 0x09, 0x01, 0x03, 0x02, 0x06, 0x04, 0x0C, 0x08};
 //byte vetorPassosByte [8] = {B1001,B0001,B0011,B0010,B0110,B0100,B1100,B1000};
 
-Pino *pino13;
+Pino 		*pino13;
 
-Pino *pinoEnableX, *pinoResetX, *pinoSleepX;
-Pino *pinoM0X, *pinoM1X, *pinoM2X;
-Pino *pinoPassoX, *pinoDirecaoX;
-Pino *pinoIN1X, *pinoIN2X, *pinoIN3X, *pinoIN4X;
-Pino *cursoMaximoX, *cursoMinimoX;
-Sigmoidal *sigmoidalX;
-Driver *driverX;
-Eixo *eixoX;
+Pino 		*pinoEnableX, *pinoResetX, *pinoSleepX;
+Pino 		*pinoM0X, *pinoM1X, *pinoM2X;
+Pino 		*pinoPassoX, *pinoDirecaoX;
+Pino 		*pinoIN1X, *pinoIN2X, *pinoIN3X, *pinoIN4X;
+Pino 		*cursoMaximoX, *cursoMinimoX;
+Sigmoidal 	*sigmoidalX;
+Driver 		*driverX;
+Eixo 		*eixoX;
 
-
-Pino *pinoEnableY, *pinoResetY, *pinoSleepY;
-Pino *pinoM0Y, *pinoM1Y, *pinoM2Y;
-Pino *pinoPassoY, *pinoDirecaoY;
-Pino *pinoIN1Y, *pinoIN2Y, *pinoIN3Y, *pinoIN4Y;
-Pino *cursoMaximoY, *cursoMinimoY;
-Sigmoidal *sigmoidalY;
-Driver *driverY;
-Eixo *eixoY;
+Pino 		*pinoEnableY, *pinoResetY, *pinoSleepY;
+Pino 		*pinoM0Y, *pinoM1Y, *pinoM2Y;
+Pino 		*pinoPassoY, *pinoDirecaoY;
+Pino 		*pinoIN1Y, *pinoIN2Y, *pinoIN3Y, *pinoIN4Y;
+Pino 		*cursoMaximoY, *cursoMinimoY;
+Sigmoidal 	*sigmoidalY;
+Driver 		*driverY;
+Eixo 		*eixoY;
 
 void inicializarEixos(Driver::TipoAcionamento tp);
 void interpretarComandos(String comando);
