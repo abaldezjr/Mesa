@@ -101,7 +101,7 @@ class Driver {
 			return this->direcao;
 		}
 
-		byte getModoPasso(void) const {
+		int getModoPasso(void) const {
 			return this->modoPasso;
 		}
 

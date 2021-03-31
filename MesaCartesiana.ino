@@ -205,8 +205,6 @@ void inicializarEixos(Driver::TipoAcionamento tp){
 		sigmoidalY
 	);
 
-	eixoX->calibrar();
-	eixoY->calibrar();
 }
 
 void interpretarComandos(String comando){
@@ -214,19 +212,21 @@ void interpretarComandos(String comando){
 	if (comando.indexOf("MOVER") > -1) movimentarMesa(comando.substring(comando.indexOf(" ")+1));
 	if (comando.indexOf("L") > -1) pino13->setEstado(HIGH);
 	if (comando.indexOf("D") > -1) pino13->setEstado(LOW);
-	if (comando.indexOf("MODOPASSOX") > -1) escolherModoPasso(eixoX, comando.substring(comando.indexOf(" ")+1));
-	if (comando.indexOf("MODOPASSOY") > -1) escolherModoPasso(eixoY, comando.substring(comando.indexOf(" ")+1));
+	if (comando.indexOf("MODOPASSOX") > -1) escolherModoPasso(eixoX, comando.substring(comando.indexOf(" ") + 1));
+	if (comando.indexOf("MODOPASSOY") > -1) escolherModoPasso(eixoY, comando.substring(comando.indexOf(" ") + 1));
 }
 
 void movimentarMesa(String coordenada){
 	if(!(coordenada.indexOf(",") == -1)){
-		x = coordenada.substring(0,coordenada.indexOf(",")).toDouble();
-		y = coordenada.substring(coordenada.indexOf(",")+1).toDouble();
+		x = coordenada.substring(0, coordenada.indexOf(",")).toDouble();
+		y = coordenada.substring(coordenada.indexOf(",") + 1).toDouble();
 		if(x >= 0 && x <= 10 && y >= 0 && y <= 10){
+
 			if(x != eixoX->getPosicao()) {
 				eixoX->rotacionarPara(x);
 				Serial.println(eixoX->getPosicao());
 			}
+
 			if(y != eixoY->getPosicao()) {
 				eixoY->rotacionarPara(y);
 				Serial.println(eixoY->getPosicao());

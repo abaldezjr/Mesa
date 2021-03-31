@@ -34,7 +34,7 @@ class Eixo {
 			return this->driver;
 		}
 
-		Pino* getPinoCursoMaximo(void) const{
+		Pino* getPinoCursoMaximo(void) const {
 			return this->pinoCursoMaximo;
 		}
 
@@ -57,7 +57,7 @@ class Eixo {
 		void rotacionarPara(int coordenada){
 			this->rotacionarPasso(
 				(coordenada*1000 - this->posicao) > 0? Driver::HORARIO: Driver::ANTIHORARIO,
-				(fabs(coordenada*1000 - this->posicao) * this->driver->getPassosPorVolta())/this->micrometrosPorVolta
+				(fabs(coordenada*1000 - this->posicao) * this->driver->getPassosPorVolta()) / this->micrometrosPorVolta
 			);
 		}
 
@@ -75,8 +75,8 @@ class Eixo {
 		Pino 		*pinoCursoMaximo, *pinoCursoMinimo;
 		Sigmoidal 	*sigmoidal;
 
-		int 		posicao 			{ 0 };
-		int 		micrometrosPorVolta { 8000 };
+		int 		posicao				{ 0 };
+		int 		micrometrosPorVolta	{ 8000 };
 		bool 		estadoFimDeCurso	{ LOW };
 
 		bool podeMovimentar(void) const {
