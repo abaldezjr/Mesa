@@ -1,3 +1,3 @@
-# Sistema de coordenadas para posicionamento de instrumentos de medição em um túnel de vento
-Esse repositório serve para disponibilizar o código fonte do meu Trabalho de conclusão de curso em Engenharia Mecânica Empresarial
+# Sistema de coordenadas para posicionamento de instrumentos de mediÃ§Ã£o em um tÃºnel de vento
+Esse repositÃ³rio serve para disponibilizar o cÃ³digo fonte do meu Trabalho de conclusï¿½o de curso em Engenharia MecÃ¢nica Empresarial
 pela Universidade Federal do Rio Grande.
