@@ -123,8 +123,8 @@ class Driver {
 				this->pinoPasso->setEstado(this->pinoPasso->getEstado()?LOW:HIGH);
 			}else{
 				switch(this->tipoPasso){
-					case TipoPasso::WAVESTEP: this->executarPasso(2,0,6); break;
-					case TipoPasso::FULLSTEP: this->executarPasso(2,1,7); break;
+					case TipoPasso::WAVESTEP: this->executarPasso(2,1,7); break;
+					case TipoPasso::FULLSTEP: this->executarPasso(2,0,6); break;
 					case TipoPasso::HALFSTEP: this->executarPasso(1,0,7); break;
 				}
 			}
