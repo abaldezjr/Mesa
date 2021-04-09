@@ -10,8 +10,9 @@ sloeber.ino.cpp.o: ..\sloeber.ino.cpp \
  C:\eclipse-arduino\eclipse\arduinoPlugin\packages\arduino\hardware\avr\1.8.3\cores\arduino/USBAPI.h \
  C:\eclipse-arduino\eclipse\arduinoPlugin\packages\arduino\hardware\avr\1.8.3\cores\arduino/Arduino.h \
  C:\eclipse-arduino\eclipse\arduinoPlugin\packages\arduino\hardware\avr\1.8.3\variants\standard/pins_arduino.h \
- ..\StepperDriver.h ..\Pino.h ..\Sigmoidal.h ..\Driver.h ..\Eixo.h \
- ..\MesaCartesiana.ino
+ ..\StepperDriver/StepperDriver.h ..\StepperDriver/Pino.h \
+ ..\StepperDriver/Sigmoidal.h ..\StepperDriver/Driver.h \
+ ..\StepperDriver/Eixo.h ..\MesaCartesiana.ino
 
 C:\eclipse-arduino\eclipse\arduinoPlugin\packages\arduino\hardware\avr\1.8.3\cores\arduino/Arduino.h:
 
@@ -35,14 +36,14 @@ C:\eclipse-arduino\eclipse\arduinoPlugin\packages\arduino\hardware\avr\1.8.3\cor
 
 C:\eclipse-arduino\eclipse\arduinoPlugin\packages\arduino\hardware\avr\1.8.3\variants\standard/pins_arduino.h:
 
-..\StepperDriver.h:
+..\StepperDriver/StepperDriver.h:
 
-..\Pino.h:
+..\StepperDriver/Pino.h:
 
-..\Sigmoidal.h:
+..\StepperDriver/Sigmoidal.h:
 
-..\Driver.h:
+..\StepperDriver/Driver.h:
 
-..\Eixo.h:
+..\StepperDriver/Eixo.h:
 
 ..\MesaCartesiana.ino:

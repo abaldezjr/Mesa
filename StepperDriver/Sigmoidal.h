@@ -1,8 +1,6 @@
 #ifndef SIGMOIDAL_H_INCLUDED
 #define SIGMOIDAL_H_INCLUDED
 
-#include <math.h>
-
 #define E 2.71828182845904523536
 
 class Sigmoidal {

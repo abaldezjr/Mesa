@@ -1,8 +1,6 @@
 #ifndef PINO_H_INCLUDED
 #define PINO_H_INCLUDED
 
-#include "Arduino.h"
-
 class Pino {
 
 	public:
