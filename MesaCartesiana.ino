@@ -1,8 +1,6 @@
 #include "Arduino.h"
 #include "StepperDriver.h"
 
-//Alexandre Marques Baldez Junior
-
 #define MODO_PASSO_X 1
 #define PINO_ENABLE_X 30
 #define PINO_RESET_X 40
@@ -208,6 +206,8 @@ void inicializarEixos(Driver::TipoAcionamento tp){
 	);
 
 }
+
+//mover 2,5
 
 void interpretarComandos(String comando){
 	comando.toUpperCase();

@@ -71,13 +71,14 @@ class Eixo {
 		}
 
 	private:
-		Driver 		*driver;
-		Pino 		*pinoCursoMaximo, *pinoCursoMinimo;
-		Sigmoidal 	*sigmoidal;
+		Driver *driver;
+		Pino *pinoCursoMaximo, *pinoCursoMinimo;
+		Sigmoidal *sigmoidal;
 
-		int 		posicao				{ 0 };
-		int 		micrometrosPorVolta	{ 8000 };
-		bool 		estadoFimDeCurso	{ LOW };
+		int posicao	{ 0 };
+		int micrometrosPorVolta { 8000 };
+		bool estadoFimDeCurso { LOW };
+		unsigned long previousMillis { 0 };
 
 		bool podeMovimentar(void) const {
 			return
@@ -102,5 +103,28 @@ class Eixo {
 				}
 			}
 		}
+
+		void rotacionarPasso2(Driver::Direcao direcao,int passos){
+			this->driver->setDirecao(direcao);
+			unsigned long currentMillis = millis();
+			int i = 0, iSig = 0;
+			while(i < passos){
+				if(this->podeMovimentar()){
+					if(currentMillis - previousMillis >= this->sigmoidal->calculoDoInstante(iSig)){
+						this->previousMillis = currentMillis;
+						this->driver->passo();
+						this->posicao += direcao * (this->micrometrosPorVolta / this->driver->getPassosPorVolta());
+						i++;
+						i <= (passos * this->driver->getModoPasso()) / 2? iSig++: iSig--;
+					}
+				}else{
+					i = passos;
+					delay(3000);
+					this->calibrar();
+				}
+			}
+		}
+
+
 };
 #endif
