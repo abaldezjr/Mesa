@@ -1,0 +1,73 @@
+#######################################
+# 			StepperDriver
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Pino			KEYWORD1
+Sigmoidal		KEYWORD1
+Driver			KEYWORD1
+Eixo			KEYWORD1
+StepperDriver	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+#Pino
+setTipo		KEYWORD2
+setNumero	KEYWORD2
+setModo		KEYWORD2
+setEstado	KEYWORD2
+getTipo		KEYWORD2
+getNumero	KEYWORD2
+getModo		KEYWORD2
+getEstado	KEYWORD2
+
+#Sigmoidal
+setVetorAceleracao	KEYWORD2
+setPeriodoMaximo	KEYWORD2
+setPeriodoMinimo	KEYWORD2
+setDeclividade		KEYWORD2
+getPeriodoMaximo	KEYWORD2
+getPeriodoMinimo	KEYWORD2
+getVetorAceleracao	KEYWORD2
+getAmplitude		KEYWORD2
+getDeclividade		KEYWORD2
+getXMedio			KEYWORD2
+calculoDoXMedio		KEYWORD2
+calculoDoInstante	KEYWORD2
+
+#Driver
+setDirecao			KEYWORD2
+getPinoEnable		KEYWORD2
+getPinoReset		KEYWORD2
+getPinoSleep		KEYWORD2
+getPinoPasso		KEYWORD2
+getPinoDirecao		KEYWORD2
+getDirecao			KEYWORD2
+getModoPasso		KEYWORD2
+getPassosPorVolta	KEYWORD2
+setarModoPasso		KEYWORD2
+passo				KEYWORD2
+setarEstados		KEYWORD2
+executarPasso		KEYWORD2
+
+#Eixo
+setPosicao			KEYWORD2
+getDriver			KEYWORD2
+getPinoCursoMaximo	KEYWORD2
+getPinoCursoMinimo	KEYWORD2
+getEstadoFimDeCurso	KEYWORD2
+getPosicao			KEYWORD2
+getSigmoidal		KEYWORD2
+rotacionarPara		KEYWORD2
+calibrar			KEYWORD2
+podeMovimentar		KEYWORD2
+rotacionarPasso		KEYWORD2
+rotacionarPasso2	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+E	LITERAL1
