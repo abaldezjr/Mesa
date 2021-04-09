@@ -1,6 +1,8 @@
 #ifndef DRIVER_H_INCLUDED
 #define DRIVER_H_INCLUDED
 
+#include "Pino.h"
+
 class Driver {
     
 	public:

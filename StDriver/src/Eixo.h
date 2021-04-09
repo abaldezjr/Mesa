@@ -1,6 +1,10 @@
 #ifndef EIXO_H_INCLUDED
 #define EIXO_H_INCLUDED
 
+#include "Pino.h"
+#include "Sigmoidal.h"
+#include "Driver.h"
+
 class Eixo {
 
 	public:
