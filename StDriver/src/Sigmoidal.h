@@ -17,10 +17,20 @@ class Sigmoidal {
 			this->xMedio = this->calculoDoXMedio();
 		}
 
+		/**
+		 * @brief
+		 * @param
+		 * @return
+		**/
 		double calculoDoXMedio(void) const {
 			return ((-1)*log( this->amplitude / ((this->periodoMaximo * 0.99999) - this->periodoMinimo) -1)) / this->declividade;
 		}
 
+		/**
+		 * @brief
+		 * @param
+		 * @return
+		**/
 		void setVetorAceleracao(int va){
 			this->vetorAceleracao = va;
 		}
