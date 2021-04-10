@@ -50,20 +50,10 @@ class Pino {
 		byte modo            { OUTPUT };
 		unsigned int estado  { LOW };
 
-		/**
-		 * @brief
-		 * @param
-		 * @return
-		**/
 		void setTipo(TipoPino t){
 			this->tipo = t;
 		}
 
-		/**
-		 * @brief
-		 * @param
-		 * @return
-		**/
 		void setNumero(byte n){
 			this->numero = n;
 		}
