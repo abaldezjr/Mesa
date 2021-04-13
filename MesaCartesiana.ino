@@ -2,6 +2,7 @@
 
 #include "StDriver/src/StDriver.h"
 
+//Configurações dos pinos
 #define MODO_PASSO_X 1
 #define PINO_ENABLE_X 30
 #define PINO_RESET_X 40
